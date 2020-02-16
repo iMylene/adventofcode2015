@@ -1,29 +1,33 @@
 import sys
 
-#data = sys.stdin.readlines()
-data = ['qjhvhtzxzqqjkmpb', 'xxyxx', 'uurcxstgmygtbstg', 'ieodomkazucvgmuy']
-
-
-#It contains a pair of any two letters that appears at least twice in the string without overlapping, like xyxy (xy) or aabcdefgaa (aa), but not like aaa (aa, but it overlaps).
+data = sys.stdin.readlines()
 
 countnicestrings = 0
 for item in data:
-    pairs = []
-    for i,j in zip(item,item[1:]):
-        pairs.append(i + j)
     
+    #It contains a pair of any two letters that appears at least twice in the string without overlapping.
+    nice1 = False
     
-    for i in range(0, len(item), 2):
-        chars = item[i:i+2]
-        #if chars in pairs:
-
-
+    for i in range(0,len(item)):
+        if len(item[i+2:]) > 1:
+            pair = item[i] + item[i+1]
+            restofstring = item[i+2:]
+            
+            if pair in restofstring:
+                nice1 = True
+                break
 
     #It contains at least one letter which repeats with exactly one letter between them
-    nice = [ i+j for i,j in zip(item,item[2:]) if (i==j) ]
-    naughty = [string for string in naughtystrings if (string in item) ]
+    nice2 = False
 
-    if not bool(naughty) and bool(nice):
+    for i in range(2,len(item)):
+        firstletter = item[i]
+        secondletter = item[i-2]
+        if firstletter == secondletter:
+            nice2 = True
+            break
+    
+    if bool(nice1) and bool(nice2):
         countnicestrings += 1
 
 print(countnicestrings)
